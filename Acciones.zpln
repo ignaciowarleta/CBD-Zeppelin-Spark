@@ -1,0 +1,116 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\n\n// Creamos una sesión de Spark\nval spark = SparkSession.builder()\n  .appName(\"Ejemplo Spark\")\n  .master(\"local[*]\")  // Esto indica que se ejecutará localmente usando todos los núcleos disponibles\n  .getOrCreate()\n\nimport spark.implicits._\n\n// Creamos un DataFrame con los datos de ejemplo\nval data = Seq((\"Alice\", 34), (\"Bob\", 45), (\"Charlie\", 30))\nval df = data.toDF(\"Name\", \"Age\")\n\n// 1. Count: Cuenta el número de elementos en el DataFrame\nval count = df.count()\nprintln(s\"El número de filas en el DataFrame es: $count\")\n\n// 2. Collect: Recopila todos los elementos del DataFrame en la memoria del driver como una lista\nval collected = df.collect()\nprintln(\"Elementos del DataFrame recopilados en una lista:\")\ncollected.foreach(println)\n\n// 3. Take: Devuelve los primeros n elementos del DataFrame como una lista\nval firstN = df.take(2)  // Tomamos los primeros 2 elementos\nprintln(\"Primeros 2 elementos del DataFrame:\")\nfirstN.foreach(println)\n\n// 4. First: Devuelve el primer elemento del DataFrame\nval firstElement = df.first()\nprintln(s\"Primer elemento del DataFrame: $firstElement\")\n\n// 5. Reduce: Aplica una función de reducción a los elementos del DataFrame y devuelve el resultado final\nval totalAge = df.select($\"Age\").as[Int].reduce(_ + _)\nprintln(s\"La suma total de las edades en el DataFrame es: $totalAge\")\n\nimport org.apache.spark.sql.functions._\n\n// Convertir la columna \"Age\" a String\nval dfWithStringAge = df.withColumn(\"Age\", $\"Age\".cast(\"string\"))\n\n// Concatenar todas las columnas en una sola columna de cadena de texto\nval concatenatedDF = df.withColumn(\"Concatenated\", concat_ws(\", \", $\"Name\", $\"Age\"))\n\n// Guardar el DataFrame con una sola columna en formato de texto // 6. SaveAsTextFile: Guarda el contenido del DataFrame en un archivo de texto en el sistema de archivos\nconcatenatedDF.select(\"Concatenated\").write.text(\"/Users/nachowarleta/Desktop/df_as_text\")\n\n// 7. Show: Muestra una cantidad específica de filas del DataFrame en la consola para su visualización\ndf.show(2)  // Muestra las primeras 2 filas del DataFrame en la consola\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-26T18:26:22+0200",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "El número de filas en el DataFrame es: 3\nElementos del DataFrame recopilados en una lista:\n[Alice,34]\n[Bob,45]\n[Charlie,30]\nPrimeros 2 elementos del DataFrame:\n[Alice,34]\n[Bob,45]\nPrimer elemento del DataFrame: [Alice,34]\nLa suma total de las edades en el DataFrame es: 109\n+-----+---+\n| Name|Age|\n+-----+---+\n|Alice| 34|\n|  Bob| 45|\n+-----+---+\nonly showing top 2 rows\n\nimport org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@1af9ddca\nimport spark.implicits._\n\u001b[1m\u001b[34mdata\u001b[0m: \u001b[1m\u001b[32mSeq[(String, Int)]\u001b[0m = List((Alice,34), (Bob,45), (Charlie,30))\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Name: string, Age: int]\n\u001b[1m\u001b[34mcount\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m = 3\n\u001b[1m\u001b[34mcollected\u001b[0m: \u001b[1m\u001b[32mArray[org.apache.spark.sql.Row]\u001b[0m = Array([Alice,34], [Bob,45], [Charlie,30])\n\u001b[1m\u001b[34mfirstN\u001b[0m: \u001b[1m\u001b[32mArray[org.apache.spark.sql.Row]\u001b[0m = Array([Alice,34], [Bob,45])\n\u001b[1m\u001b[34mfirstElement\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Row\u001b[0m = [Alice,34]\n\u001b[1m\u001b[34mtotalAge\u001b[0m: \u001b[1m\u001b[32mInt\u001b[0m = 109\nimport org.apache.spar...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=54",
+              "$$hashKey": "object:3516"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=55",
+              "$$hashKey": "object:3517"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=56",
+              "$$hashKey": "object:3518"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=57",
+              "$$hashKey": "object:3519"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714142264983_442937804",
+      "id": "paragraph_1714142264983_442937804",
+      "dateCreated": "2024-04-26T16:37:44+0200",
+      "dateStarted": "2024-04-26T18:18:05+0200",
+      "dateFinished": "2024-04-26T18:18:06+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3149"
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714142275976_1478956779",
+      "id": "paragraph_1714142275976_1478956779",
+      "dateCreated": "2024-04-26T16:37:55+0200",
+      "status": "READY",
+      "$$hashKey": "object:3150"
+    }
+  ],
+  "name": "Acciones",
+  "id": "2JUZMT7CA",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Acciones"
+}

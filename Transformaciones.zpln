@@ -1,0 +1,128 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.sql.SparkSession\n\n// Creamos una sesión de Spark\nval spark = SparkSession.builder()\n  .appName(\"Ejemplo Spark\")\n  .master(\"local[*]\")  // Esto indica que se ejecutará localmente usando todos los núcleos disponibles\n  .getOrCreate()\n\nimport spark.implicits._\n\n// Creamos un DataFrame con los datos de ejemplo\nval data = Seq((\"Alice\", 34), (\"Bob\", 45), (\"Charlie\", 30))\nval df = data.toDF(\"Name\", \"Age\")\n// Añadimos un valor para ver los cambios en los apartados 4 y 5\nval data2 = Seq((\"Alice\", 34), (\"Bob\", 45), (\"Charlie\", 30), (\"Alice\", 70))\nval df2 = data2.toDF(\"Name\", \"Age\")\ndf.show()\n\n// 1. Map: Aplicar una función a cada elemento del DataFrame\nval mappedDF = df.select($\"Name\", $\"Age\" + 1 as \"IncreasedAge\")\nmappedDF.show()\n\n// 2. Filter: Filtrar los elementos del DataFrame\nval filteredDF = df.filter($\"Age\" > 30)\nfilteredDF.show()\n\n// 3. FlatMap: Aplicar una función que mapea a cero o más elementos de salida\nval flatMappedDF = df.flatMap(row => {\n  if (row.getAs[Int](\"Age\") > 30) {\n    Seq((row.getAs[String](\"Name\"), \"Senior\"))\n  } else {\n    Seq.empty\n  }\n}).toDF(\"Name\", \"Category\")\nflatMappedDF.show()\n\n// 4. ReduceByKey: Reducir valores por clave (aquí necesitamos trabajar con RDDs en lugar de DataFrames)\nval rdd = df2.rdd.map(row => (row.getAs[String](\"Name\"), row.getAs[Int](\"Age\")))\nval reducedByKeyRDD = rdd.reduceByKey(_ + _)\nreducedByKeyRDD.collect().foreach(println)\n\n// 5. GroupByKey: Agrupar valores por clave\nval groupedRDD = rdd.groupByKey()\ngroupedRDD.collect().foreach(println)\n\n// 6. Join: Unir dos DataFrames basándose en una clave común\nval anotherData = Seq((\"Alice\", \"Engineer\"), (\"Bob\", \"Doctor\"))\nval anotherDF = anotherData.toDF(\"Name\", \"Profession\")\nval joinedDF = df.join(anotherDF, Seq(\"Name\"))\njoinedDF.show()\n\n// 7. Cogroup: Realizar una cogroup entre dos RDDs\nval rdd2 = anotherDF.rdd.map(row => (row.getAs[String](\"Name\"),\n                            row.getAs[String](\"Profession\")))\nval cogroupedRDD = rdd.cogroup(rdd2)\ncogroupedRDD.collect().foreach(println)\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-26T18:17:10+0200",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+---+\n|   Name|Age|\n+-------+---+\n|  Alice| 34|\n|    Bob| 45|\n|Charlie| 30|\n+-------+---+\n\n+-------+------------+\n|   Name|IncreasedAge|\n+-------+------------+\n|  Alice|          35|\n|    Bob|          46|\n|Charlie|          31|\n+-------+------------+\n\n+-----+---+\n| Name|Age|\n+-----+---+\n|Alice| 34|\n|  Bob| 45|\n+-----+---+\n\n+-----+--------+\n| Name|Category|\n+-----+--------+\n|Alice|  Senior|\n|  Bob|  Senior|\n+-----+--------+\n\n(Alice,104)\n(Bob,45)\n(Charlie,30)\n(Alice,CompactBuffer(34, 70))\n(Bob,CompactBuffer(45))\n(Charlie,CompactBuffer(30))\n+-----+---+----------+\n| Name|Age|Profession|\n+-----+---+----------+\n|Alice| 34|  Engineer|\n|  Bob| 45|    Doctor|\n+-----+---+----------+\n\n(Alice,(CompactBuffer(34, 70),CompactBuffer(Engineer)))\n(Bob,(CompactBuffer(45),CompactBuffer(Doctor)))\n(Charlie,(CompactBuffer(30),CompactBuffer()))\nimport org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@1af9ddca\nimport spark.implicits._\n\u001b[1m\u001b[34mdata\u001b[0m: \u001b[1m\u001b[32mSeq[(String, Int)]\u001b[0m = List((Alice,34), (Bob,45), (Charlie,30))\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Name: string, Age: int]\n\u001b[1m\u001b[34mdata2\u001b[0m: \u001b[1m\u001b[32mSeq[(String, Int)]\u001b[0m = List((Alice,34), (Bob,45), (Charlie,30), (Alice,70))\n\u001b[1m\u001b[34mdf2\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Name: string, Age: int]\n\u001b[1m\u001b[34mmappedDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Name: string, IncreasedAge: int]\n\u001b[1m\u001b[34mfilteredDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [Name: string, Age: int]\n\u001b[1m\u001b[34mflatMappe...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=44",
+              "$$hashKey": "object:3957"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=45",
+              "$$hashKey": "object:3958"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=46",
+              "$$hashKey": "object:3959"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=47",
+              "$$hashKey": "object:3960"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=48",
+              "$$hashKey": "object:3961"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=49",
+              "$$hashKey": "object:3962"
+            },
+            {
+              "jobUrl": "http://192.168.1.122:4040/jobs/job?id=50",
+              "$$hashKey": "object:3963"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714142067946_535574952",
+      "id": "paragraph_1714142067946_535574952",
+      "dateCreated": "2024-04-26T16:34:27+0200",
+      "dateStarted": "2024-04-26T18:17:10+0200",
+      "dateFinished": "2024-04-26T18:17:12+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3883"
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714142070943_762620519",
+      "id": "paragraph_1714142070943_762620519",
+      "dateCreated": "2024-04-26T16:34:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:3884"
+    }
+  ],
+  "name": "Transformaciones",
+  "id": "2JX29TPNY",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Transformaciones"
+}
