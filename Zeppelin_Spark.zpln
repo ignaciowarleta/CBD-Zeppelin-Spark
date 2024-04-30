@@ -1,0 +1,965 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "//Vamos a trabajar con un csv sobre el Covid 19 extraido de la pagina oficial de la OMS\n\n//Con spark podermos importar y mostrar el csv\nval df = spark.read.option(\"header\",\"true\").csv(\"/home/egc2324/Escritorio/Covid-19.csv\")\ndf.show()",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-30T14:34:47+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+----+----+------+---------+---------+----------------+----------------+----------------+\n|    country|iso3|year|   sex|age_group|     type|   expected_mean|        acm_mean|     excess_mean|\n+-----------+----+----+------+---------+---------+----------------+----------------+----------------+\n|Afghanistan| AFG|2020|Female|     0-24|predicted|49083.6439335266|49103.1431533225|               0|\n|Afghanistan| AFG|2020|Female|    25-34|predicted| 6452.9670394984|6691.24721854869|236.607817172177|\n|Afghanistan| AFG|2020|Female|    35-44|predicted|6117.87310635972|  6977.363938828| 860.30071392836|\n|Afghanistan| AFG|2020|Female|    45-54|predicted|7711.68953142234|9330.21731710218|1621.57180617288|\n|Afghanistan| AFG|2020|Female|    55-64|predicted|10061.5441565976|12457.9850857855|2401.48897102767|\n|Afghanistan| AFG|2020|Female|    65-74|predicted|13955.3421144752| 17144.299885298|3195.44937263931|\n|Afghanistan| AFG|2020|Female|    75-84|predicted|12751.7113222847|14639.0412442922|1889.38041140226|\n|Afghanistan| AFG|2020|Female|      >85|predicted|3694.55430771967|4614.09830510881|921.547262333789|\n|Afghanistan| AFG|2020|  Male|     0-24|predicted| 67685.668415993|67712.5575713145|               0|\n|Afghanistan| AFG|2020|  Male|    25-34|predicted|15363.9268330534|15618.5418317011|249.450996723866|\n|Afghanistan| AFG|2020|  Male|    35-44|predicted|10604.8438492804| 11884.726237191|1280.49239283601|\n|Afghanistan| AFG|2020|  Male|    45-54|predicted|11163.8497511883|13653.8614059119|2494.97389741055|\n|Afghanistan| AFG|2020|  Male|    55-64|predicted|12851.5293643308|16681.9352735524|3839.76280623787|\n|Afghanistan| AFG|2020|  Male|    65-74|predicted|14370.2321875638|18771.8673062429|4412.54606046539|\n|Afghanistan| AFG|2020|  Male|    75-84|predicted|11140.2220066677|13762.1682871352|2627.41675201605|\n|Afghanistan| AFG|2020|  Male|      >85|predicted|2540.92704543385|3461.41993866518|922.959774238479|\n|Afghanistan| AFG|2021|Female|     0-24|predicted|46857.2342239702|46868.5917267094|               0|\n|Afghanistan| AFG|2021|Female|    25-34|predicted|6413.06625846432|7446.91632876693|1033.95023594511|\n|Afghanistan| AFG|2021|Female|    35-44|predicted|6045.34426583329|7810.97154900019|1766.98963932045|\n|Afghanistan| AFG|2021|Female|    45-54|predicted|7706.03071088888|10622.1672150257|2918.93976427971|\n+-----------+----+----+------+---------+---------+----------------+----------------+----------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [country: string, iso3: string ... 7 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=119",
+              "$$hashKey": "object:2407"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=120",
+              "$$hashKey": "object:2408"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047975_2089055930",
+      "id": "paragraph_1714156118733_1296364215",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:34+0200",
+      "dateFinished": "2024-04-29T03:20:35+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:385"
+    },
+    {
+      "text": "//Resumen de los datos del csv como el numero de lineas, la media, desviacion tipica, minimo, maximo, y quartiles\ndf.summary().show()",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:35+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+-----------+----+------------------+------+---------+---------+------------------+--------------------+--------------------+\n|summary|    country|iso3|              year|   sex|age_group|     type|     expected_mean|            acm_mean|         excess_mean|\n+-------+-----------+----+------------------+------+---------+---------+------------------+--------------------+--------------------+\n|  count|       6208|6208|              6208|  6208|     6208|     6208|              6208|                6208|                6208|\n|   mean|       NULL|NULL|            2020.5|  NULL|     NULL|     NULL|17998.028409242663|   20403.44230648754|   2394.150623802356|\n| stddev|       NULL|NULL|0.5000402754843715|  NULL|     NULL|     NULL|   81254.991188412|   91110.96350316977|  17719.920197646305|\n|    min|Afghanistan| AFG|              2020|Female|     0-24|predicted|0.0089972462518305|0.000199999067059746|-0.00003941273567...|\n|    25%|       NULL|NULL|            2020.0|  NULL|     NULL|     NULL|  370.279686001154|     410.59714442932|                 0.0|\n|    50%|       NULL|NULL|            2020.0|  NULL|     NULL|     NULL|  2430.54407036093|     2717.3239840715|    84.0939163858323|\n|    75%|       NULL|NULL|            2021.0|  NULL|     NULL|     NULL|  9051.13445433828|    10429.4600646717|    799.409980895945|\n|    max|   Zimbabwe| ZWE|              2021|  Male|      >85| reported|  99946.9730479255|     999.42250247917|    998.827172948159|\n+-------+-----------+----+------------------+------+---------+---------+------------------+--------------------+--------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=121",
+              "$$hashKey": "object:888"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=122",
+              "$$hashKey": "object:889"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047975_1058932594",
+      "id": "paragraph_1714156783680_194923627",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:35+0200",
+      "dateFinished": "2024-04-29T03:20:36+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:386"
+    },
+    {
+      "text": "// Promedio de muertes estimadas y esperadas por sexo\n\nimport org.apache.spark.sql.functions._\n\nval promedioExpectedMeanPorSexo = df.groupBy(\"sex\").agg(avg(\"expected_mean\").alias(\"promedio_expected_mean\"))\nval promedioAcmMeanPorSexo = df.groupBy(\"sex\").agg(avg(\"acm_mean\").alias(\"promedio_acm_mean\"))\n\nval datosFiltradosUnidos = promedioExpectedMeanPorSexo.join(promedioAcmMeanPorSexo, Seq(\"sex\"), \"inner\")\ndatosFiltradosUnidos.show()",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:36+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+----------------------+------------------+\n|   sex|promedio_expected_mean| promedio_acm_mean|\n+------+----------------------+------------------+\n|Female|    16552.458177950986|18690.645982981787|\n|  Male|    19443.598640534325|22116.238629993182|\n+------+----------------------+------------------+\n\nimport org.apache.spark.sql.functions._\n\u001b[1m\u001b[34mpromedioExpectedMeanPorSexo\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [sex: string, promedio_expected_mean: double]\n\u001b[1m\u001b[34mpromedioAcmMeanPorSexo\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [sex: string, promedio_acm_mean: double]\n\u001b[1m\u001b[34mdatosFiltradosUnidos\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [sex: string, promedio_expected_mean: double ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=123",
+              "$$hashKey": "object:939"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=124",
+              "$$hashKey": "object:940"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=125",
+              "$$hashKey": "object:941"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=126",
+              "$$hashKey": "object:942"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047975_509350441",
+      "id": "paragraph_1714264577600_1612613508",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:36+0200",
+      "dateFinished": "2024-04-29T03:20:37+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:387"
+    },
+    {
+      "text": "import org.apache.spark.sql.functions._\n// Obtener el pais con el menor y mayor numero de muertes estimadas que haya sido reportada\n\nval paisesConReporte = df.filter($\"type\" === \"reported\")\n\nval totalMuertesPorPais = paisesConReporte.groupBy(\"country\").agg(round(sum($\"acm_mean\")).alias(\"total_muertes\"))\n\nval paisConMenosMuertes = totalMuertesPorPais.orderBy(\"total_muertes\").first()\n\nval paisConMasMuertes = totalMuertesPorPais.orderBy($\"total_muertes\".desc).first()\n\nprintln(s\"El país que ha reportado menos muertes es ${paisConMenosMuertes.getAs(0)}, con un total de ${paisConMenosMuertes.getAs(1)} fallecidos por el COVID-19.\")\nprintln(s\"El país que ha reportado mas muertes es ${paisConMasMuertes.getAs(0)}, con un total de ${paisConMasMuertes.getAs(1)} fallecidos por el COVID-19.\")",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:37+0200",
+      "progress": 50,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "country0",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {
+                          "priority": 0,
+                          "direction": "asc"
+                        },
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "total_muertes1",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1,
+                      "paginationPageSize": 250
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "country": "string",
+                      "total_muertes": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "El país que ha reportado menos muertes es San Marino, con un total de 655.0 fallecidos por el COVID-19.\nEl país que ha reportado mas muertes es United States of America, con un total de 6861924.0 fallecidos por el COVID-19.\nimport org.apache.spark.sql.functions._\n\u001b[1m\u001b[34mpaisesConReporte\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [country: string, iso3: string ... 7 more fields]\n\u001b[1m\u001b[34mtotalMuertesPorPais\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [country: string, total_muertes: double]\n\u001b[1m\u001b[34mpaisConMenosMuertes\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Row\u001b[0m = [San Marino,655.0]\n\u001b[1m\u001b[34mpaisConMasMuertes\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Row\u001b[0m = [United States of America,6861924.0]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=127",
+              "$$hashKey": "object:1000"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=128",
+              "$$hashKey": "object:1001"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=129",
+              "$$hashKey": "object:1002"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=130",
+              "$$hashKey": "object:1003"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047976_1937769059",
+      "id": "paragraph_1714156873434_1848849833",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:37+0200",
+      "dateFinished": "2024-04-29T03:20:38+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:388"
+    },
+    {
+      "text": "import org.apache.spark.sql.functions._\n\n//Obtener el numero medio de muertes esperadas por pais en cada año\nval datosTransformados = df.groupBy(\"country\", \"year\")\n                           .agg(avg(\"expected_mean\").alias(\"promedio_expected_mean\"))\n                           \n//A través de zeppelin podemos mostrar los resultados y estudiar los datos a traves tipos de gráficos\nz.show(datosTransformados)",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:38+0200",
+      "progress": 50,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "country": "string",
+                      "year": "string",
+                      "promedio_expected_mean": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "country",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "year",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "promedio_expected_mean",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "country\tyear\tpromedio_expected_mean\nCongo\t2021\t2219.5552471464734\nDominica\t2020\t33.59326774296603\nEswatini\t2021\t708.3930103331403\nChad\t2021\t9309.989679969036\nNauru\t2020\t3.850890888547143\nOman\t2021\t1051.4096049556624\nIreland\t2021\t1966.5982344691893\nAzerbaijan\t2020\t4020.1307217416334\nDemocratic Republic of the Congo\t2021\t45236.35655248741\nComoros\t2021\t317.25523031421477\nRussian Federation\t2020\t109897.515617394\nHungary\t2021\t8037.553519177512\nMexico\t2020\t47351.37304612903\nPapua New Guinea\t2021\t3880.147196432076\nUruguay\t2020\t2181.8884823139256\nGuatemala\t2021\t6170.345501043362\nSaint Kitts and Nevis\t2020\t24.959538185723773\nSaint Lucia\t2020\t97.87512305622585\nSaudi Arabia\t2020\t9111.400913999654\nBhutan\t2021\t296.1493906139668\nSan Marino\t2021\t16.069973796212626\nLiberia\t2021\t2249.039056712495\nYemen\t2021\t11473.53824809355\nAngola\t2021\t14352.817893605976\nBurundi\t2020\t4825.8824871007655\nCzechia\t2021\t7076.29483095829\nGhana\t2021\t11842.332111133359\nGuinea-Bissau\t2020\t1009.4327950569137\nIndia\t2021\t581198.6816171681\nSerbia\t2021\t6216.10492282696\nUruguay\t2021\t2203.8536028555777\nViet Nam\t2020\t46131.62643220899\nBarbados\t2020\t174.335902387516\nGambia\t2020\t891.9977555973957\nThailand\t2021\t31085.18344789403\nDjibouti\t2021\t454.6492334264976\nKenya\t2021\t18689.494442276504\nSingapore\t2021\t1406.7487471211743\nAntigua and Barbuda\t2021\t41.111150919569944\nAlgeria\t2021\t13120.78679373875\nIraq\t2020\t7625.96351214055\nIceland\t2020\t141.99965715720828\nPakistan\t2021\t103869.50502142249\nGrenada\t2021\t64.75069181338317\nMauritania\t2021\t1666.047159228346\nAndorra\t2021\t38.5989669693365\nCanada\t2021\t18699.488248184865\nGermany\t2021\t59778.01336950488\nDjibouti\t2020\t452.3475882083239\nMicronesia (Federated States of)\t2020\t65.42181161667973\nAngola\t2020\t14325.006489728743\nGhana\t2020\t11862.973402719308\nIndonesia\t2021\t117727.0697898663\nNiger\t2020\t11526.109649332033\nSolomon Islands\t2020\t304.4271190639776\nUzbekistan\t2021\t10493.208306642045\nNiue\t2020\t0.7655908242428562\nArmenia\t2021\t1543.6187260988913\nSudan\t2020\t15174.018347361025\nSpain\t2021\t26041.994822719906\nSeychelles\t2020\t52.866304813792894\nTogo\t2020\t3419.0202006398727\nNamibia\t2021\t1109.5118829987148\nMauritius\t2020\t714.8189428133792\nSyrian Arab Republic\t2021\t3805.2784225280166\nBolivia (Plurinational State of)\t2020\t5004.148138060761\nJamaica\t2021\t1197.2555414874464\nLuxembourg\t2021\t281.12881807118623\nNew Zealand\t2020\t2177.7915000300445\nCook Islands\t2021\t8.381202811642925\nRepublic of Moldova\t2020\t2204.978034069744\nMonaco\t2020\t30.843406432383752\nPhilippines\t2020\t38994.97335832244\nViet Nam\t2021\t46759.633836426634\nUnited Arab Emirates\t2020\t1119.0932686088\nNorway\t2021\t2531.5533958215237\nMozambique\t2021\t17931.702070443745\nChina\t2020\t628698.6872909128\nFinland\t2021\t3427.123619416406\nArgentina\t2020\t21336.69013630879\nBangladesh\t2021\t51492.941017155325\nCôte d'Ivoire\t2020\t12069.199750998003\nDemocratic Republic of the Congo\t2020\t45142.27134777997\nNetherlands\t2021\t9672.144234162313\nBulgaria\t2021\t6642.536075776948\nHaiti\t2021\t5830.876317634897\nBelgium\t2020\t6792.73558248683\nGambia\t2021\t897.1639337237053\nTimor-Leste\t2020\t481.5613938575873\nDenmark\t2021\t3469.804769177683\nSudan\t2021\t15275.998977839803\nEthiopia\t2021\t39006.21125509501\nTrinidad and Tobago\t2021\t582.2895640338305\nNigeria\t2020\t102954.57235617936\nNicaragua\t2020\t1595.4173436839508\nVanuatu\t2021\t141.12074029216194\nSerbia\t2020\t6257.869888646432\nMadagascar\t2020\t11258.171166370259\nCook Islands\t2020\t8.175651773110802\nGeorgia\t2020\t3251.0766501709704\nUnited Republic of Tanzania\t2020\t20042.851359818967\nPeru\t2021\t13190.848455624366\nChile\t2021\t7094.690266845927\nJamaica\t2020\t1183.313394420855\nMyanmar\t2020\t23415.969176503302\nTogo\t2021\t3392.2654596522734\nGuinea-Bissau\t2021\t1006.5025238228228\nCyprus\t2021\t399.66374091243813\nKuwait\t2020\t460.27103377706464\nVenezuela (Bolivarian Republic of)\t2020\t11359.98408730454\nBrunei Darussalam\t2021\t138.0704478161122\nGeorgia\t2021\t3202.0772120774545\nCambodia\t2020\t6140.386983366755\nJapan\t2020\t87898.00983685092\nNorth Macedonia\t2021\t1479.6079777389762\nNiger\t2021\t11595.586155125657\nGuatemala\t2020\t6108.235067052035\nTürkiye\t2021\t32292.135072119174\nPhilippines\t2021\t39819.424810948556\nMauritius\t2021\t738.0706063172328\nSlovakia\t2021\t3323.0621344275105\nTuvalu\t2021\t5.790558583627054\nItaly\t2021\t39615.07153165032\nAfghanistan\t2020\t15971.90781033722\nMozambique\t2020\t17830.53463181132\nFrance\t2021\t37891.66514691757\nKyrgyzstan\t2020\t2034.6369692764927\nKiribati\t2020\t82.12127960406995\nChile\t2020\t6962.373676413916\nCôte d'Ivoire\t2021\t11942.841238329078\nDemocratic People's Republic of Korea\t2021\t14463.258398806869\nEl Salvador\t2021\t2578.8937660429574\nCameroon\t2020\t12091.73575111822\nMarshall Islands\t2020\t20.417762675406983\nPortugal\t2020\t7027.373034963782\nBurkina Faso\t2021\t9496.370487424047\nIsrael\t2021\t2871.157084809413\nKiribati\t2021\t83.32656369618859\nSouth Africa\t2020\t35100.680870827724\nBrunei Darussalam\t2020\t134.81367763116737\nKenya\t2020\t18515.759176548974\nAlgeria\t2020\t12971.753638105192\nPanama\t2021\t1343.4918672679255\nCanada\t2020\t18321.840954535128\nPoland\t2021\t26235.236246526692\nLithuania\t2020\t2335.1150027855842\nSierra Leone\t2020\t4094.991859720118\nSlovenia\t2021\t1470.1803318844773\nEquatorial Guinea\t2021\t660.7222127343008\nRepublic of Korea\t2021\t19329.753820284426\nSaint Kitts and Nevis\t2021\t24.125621264193992\nSaint Lucia\t2021\t101.39821836987997\nAustria\t2020\t5111.7233138791225\nEcuador\t2020\t5302.270964969831\nIreland\t2020\t1953.4095019257911\nZimbabwe\t2021\t7148.080989087471\nJordan\t2021\t2014.9746929967612\nRepublic of Moldova\t2021\t2155.0335612363137\nBelize\t2020\t127.20565147152263\nEthiopia\t2020\t39085.345121163824\nLebanon\t2020\t1935.7548195183351\nUganda\t2021\t14150.23518741177\nIndonesia\t2020\t115631.52151524347\nIran (Islamic Republic of)\t2020\t28220.883681002833\nRwanda\t2021\t4096.159430009282\nSao Tome and Principe\t2021\t62.24658770934498\nAustria\t2021\t5123.557442861699\nMonaco\t2021\t30.2079299717404\nLiberia\t2020\t2268.3979579457914\nPeru\t2020\t12852.929969475319\nDominican Republic\t2021\t3769.1013833580887\nLesotho\t2021\t2235.3151756959523\nEswatini\t2020\t723.5739769173882\nTunisia\t2021\t5139.871735927693\nBosnia and Herzegovina\t2021\t2233.667760640359\nEgypt\t2021\t34830.615668777216\nSouth Sudan\t2021\t5606.375276535736\nBolivia (Plurinational State of)\t2021\t5071.9899264914875\nTurkmenistan\t2020\t2326.0279714541675\nUkraine\t2021\t35586.905289798815\nUnited States of America\t2021\t185607.84397165556\nNigeria\t2021\t102700.62464074623\nNicaragua\t2021\t1622.0543204512933\nParaguay\t2021\t2169.3103974080555\nDemocratic People's Republic of Korea\t2020\t14266.63782892922\nKyrgyzstan\t2021\t2013.6778313921525\nMalawi\t2021\t6610.9509328261975\nThailand\t2020\t30859.152597639193\nIceland\t2021\t142.69269845431376\nLesotho\t2020\t2234.48216614494\nCroatia\t2020\t3194.5150844340787\nSao Tome and Principe\t2020\t62.14276746252803\nAfghanistan\t2021\t16001.767439924799\nBahamas\t2021\t200.12718372696278\nYemen\t2020\t11180.986642257065\nHungary\t2020\t8059.390532891637\nSaint Vincent and the Grenadines\t2020\t65.31466457984563\nSomalia\t2020\t10569.97416853836\nSyrian Arab Republic\t2020\t4522.647308717786\nArgentina\t2021\t21336.942322153733\nBelize\t2021\t130.3175711089093\nQatar\t2021\t222.42261532831643\nMyanmar\t2021\t23145.670298830024\nAzerbaijan\t2021\t4041.5406149869195\nBarbados\t2021\t177.6186839540514\nEstonia\t2021\t957.2742187128442\nMontenegro\t2020\t456.4361822724196\nPanama\t2020\t1307.4827584727816\nZimbabwe\t2020\t7244.432803381345\nIraq\t2021\t7751.759533750883\nNiue\t2021\t0.9391866166571855\nSolomon Islands\t2021\t311.51826170023617\nSouth Africa\t2021\t35237.97589146391\nGuinea\t2021\t6740.992916586038\nNetherlands\t2020\t9604.87464577058\nTuvalu\t2020\t5.7679225487236705\nJordan\t2020\t1991.582512486421\nMalawi\t2020\t6680.436203558489\nUnited Republic of Tanzania\t2021\t20005.632990111793\nGrenada\t2020\t64.3662533288746\nCabo Verde\t2021\t173.86198973209787\nGabon\t2020\t893.8382739264413\nBahrain\t2020\t312.0404739512428\nIran (Islamic Republic of)\t2021\t28690.897028114392\nMorocco\t2021\t16149.035073951703\nCongo\t2020\t2203.2605630544313\nTonga\t2021\t39.46374821145467\nTurkmenistan\t2021\t2361.073539032081\nTürkiye\t2020\t31655.486911893455\nSaint Vincent and the Grenadines\t2021\t67.62697154658491\nGabon\t2021\t896.1324934564319\nLao People's Democratic Republic\t2020\t2736.4190362251866\nLibya\t2020\t1800.229696725067\nSenegal\t2021\t5403.988779942812\nSuriname\t2021\t274.3079512706064\nSlovenia\t2020\t1415.0688620991245\nTimor-Leste\t2021\t490.4480630222283\nBurkina Faso\t2020\t9493.614584071629\nCentral African Republic\t2020\t3455.3294822215876\nFiji\t2020\t453.5743456576417\nLebanon\t2021\t1923.2554485448768\nRomania\t2020\t16231.24113597559\nFiji\t2021\t462.68570206583297\nMauritania\t2020\t1653.0344636736643\nNamibia\t2020\t1125.4924856983994\nVenezuela (Bolivarian Republic of)\t2021\t11666.539701254138\nNepal\t2021\t11199.75000059408\nBosnia and Herzegovina\t2020\t2250.6347704766176\nCzechia\t2020\t7044.7090115335595\nGuyana\t2020\t521.5804606527422\nKazakhstan\t2020\t8210.848187042928\nEl Salvador\t2020\t2590.368233173187\nTonga\t2020\t39.23386014346193\nGuinea\t2020\t6748.5948240151565\nParaguay\t2020\t2132.4107654058985\nTajikistan\t2021\t2204.017687289395\nBenin\t2021\t5899.563120106958\nBrazil\t2021\t86414.11723641299\nHonduras\t2021\t3596.6157536154838\nSamoa\t2021\t75.18296054929363\nNepal\t2020\t11094.86204592024\nRussian Federation\t2021\t108026.76382562389\nSlovakia\t2020\t3327.4039536779524\nUnited Arab Emirates\t2021\t1129.9641376974519\nNauru\t2021\t3.8085119545301156\nAntigua and Barbuda\t2020\t39.66785867946224\nCentral African Republic\t2021\t3370.990439211888\nSwitzerland\t2020\t4199.1247256016795\nMaldives\t2020\t69.18074635956536\nMalta\t2020\t233.31496911070673\nTajikistan\t2020\t2222.2753459570577\nLatvia\t2020\t1745.4123514818466\nUganda\t2020\t14197.807067701315\nAndorra\t2020\t37.62365082041092\nOman\t2020\t1033.8204719715097\nRwanda\t2020\t4056.5349872560573\nAustralia\t2021\t10464.63399481319\nBangladesh\t2020\t50600.28501157639\nNorth Macedonia\t2020\t1488.031499281914\nSweden\t2020\t5404.826519771794\nAlbania\t2020\t1349.3313371229274\nGermany\t2020\t59411.113234757606\nMalaysia\t2021\t11597.999321796167\nZambia\t2021\t7592.387282036679\nSweden\t2021\t5359.0674442684085\nLuxembourg\t2020\t275.63861394729315\nMalta\t2021\t237.70275313392457\nBahrain\t2021\t336.15891575706956\nCroatia\t2021\t3162.1694902357613\nCambodia\t2021\t6239.1258554679625\nMongolia\t2020\t1287.1175227698777\nMexico\t2021\t48652.747057036606\nBahamas\t2020\t192.82421880659703\nCyprus\t2020\t393.6372015951126\nCuba\t2020\t6991.79124749487\nBrazil\t2020\t85275.63899526482\nCabo Verde\t2020\t172.4924302003193\nMaldives\t2021\t67.88450933255994\nLithuania\t2021\t2279.0853488517578\nEquatorial Guinea\t2020\t651.4892920471038\nLao People's Democratic Republic\t2021\t2752.7325866099773\nPoland\t2020\t25943.927420227054\nSuriname\t2020\t269.6096123426475\nBurundi\t2021\t4856.539844519503\nChina\t2021\t632439.2080136655\nDominican Republic\t2020\t3750.367736948265\nEgypt\t2020\t34875.62494102773\nHonduras\t2020\t3512.628835629088\nMadagascar\t2021\t11384.71654591639\nQatar\t2020\t224.34667219788952\nComoros\t2020\t316.00350534149123\nDenmark\t2020\t3438.7478106135877\nRepublic of Korea\t2020\t18970.70193228943\nNew Zealand\t2021\t2223.1571309279147\nBelarus\t2020\t7488.966481706908\nPalau\t2020\t14.770387250900495\nSierra Leone\t2021\t4002.7272842252014\nBulgaria\t2020\t6681.184235866529\nSan Marino\t2020\t15.984408225364188\nSouth Sudan\t2020\t5645.221004795414\nUkraine\t2020\t35822.022546802\nFrance\t2020\t37649.68011306814\nGreece\t2020\t7730.940499280401\nHaiti\t2020\t5939.777226135057\nSaudi Arabia\t2021\t9264.414743196381\nCameroon\t2021\t11909.479813382011\nMicronesia (Federated States of)\t2021\t66.92828687504704\nGuyana\t2021\t541.5150593980962\nUzbekistan\t2020\t10504.967133547943\nBotswana\t2021\t1304.784381486553\nMorocco\t2020\t15793.57424640672\nSamoa\t2020\t75.11508795173464\nFinland\t2020\t3408.419647910271\nSeychelles\t2021\t54.75499421015469\nVanuatu\t2020\t138.0196152669349\nBenin\t2020\t5874.013705497501\nArmenia\t2020\t1579.2747684057044\nMarshall Islands\t2021\t20.078347533243814\nTrinidad and Tobago\t2020\t585.4415385430923\nColombia\t2020\t15431.55227413357\nLatvia\t2021\t1733.7546199228266\nColombia\t2021\t15840.849552453741\nSingapore\t2020\t1377.5545269026345\nZambia\t2020\t7582.963930846\nMali\t2020\t9640.144079199932\nPakistan\t2020\t103139.31150038455\nSomalia\t2021\t10523.661167713859\nMali\t2021\t9615.884471258318\nGreece\t2021\t7768.202986561481\nPalau\t2021\t15.099276914340319\nAlbania\t2021\t1343.3036851029312\nSwitzerland\t2021\t4207.8780465816135\nItaly\t2020\t39810.60222094029\nTunisia\t2020\t5023.040892477696\nBhutan\t2020\t289.702137283131\nKazakhstan\t2021\t8206.484306914384\nSri Lanka\t2021\t9897.500778929145\nIsrael\t2020\t2850.5035095512953\nPortugal\t2021\t7058.924173917523\nCuba\t2021\t7158.569771214355\nSri Lanka\t2020\t9483.234059805895\nMongolia\t2021\t1307.809853085428\nThe United Kingdom\t2020\t37680.52036199894\nKuwait\t2021\t474.57761887025754\nJapan\t2021\t89379.72527385411\nUnited States of America\t2020\t182657.69752248866\nBelarus\t2021\t7486.807811076578\nBotswana\t2020\t1298.0902514476954\nMalaysia\t2020\t11282.725541706432\nCosta Rica\t2020\t1591.9343392011629\nEcuador\t2021\t5382.826403271502\nSenegal\t2020\t5407.993018251672\nBelgium\t2021\t6778.977211157209\nMontenegro\t2021\t458.88407901114795\nNorway\t2020\t2535.5446528703997\nPapua New Guinea\t2020\t3835.245958471539\nEritrea\t2020\t1725.9835803709843\nLibya\t2021\t1841.8397600450542\nRomania\t2021\t16205.842153272128\nThe United Kingdom\t2021\t37622.66826000858\nAustralia\t2020\t10362.138709414709\nEritrea\t2021\t1715.4015384923005\nEstonia\t2020\t958.0887786876657\nCosta Rica\t2021\t1648.103968891883\nSpain\t2020\t26066.70860055837\nIndia\t2020\t576307.8258686846\nChad\t2020\t9304.798278155487\nDominica\t2021\t30.572501864594447\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.functions._\n\u001b[1m\u001b[34mdatosTransformados\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [country: string, year: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=131",
+              "$$hashKey": "object:1061"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=132",
+              "$$hashKey": "object:1062"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714349833047_279890851",
+      "id": "paragraph_1714349833047_279890851",
+      "dateCreated": "2024-04-29T02:17:13+0200",
+      "dateStarted": "2024-04-29T03:20:38+0200",
+      "dateFinished": "2024-04-29T03:20:38+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:389"
+    },
+    {
+      "text": "//Obtener la tasa de muerte estimada por sexo y rango de años en un pais y año especifico\n\nval pais = \"Spain\"\nval año = 2020\nval datosFiltradosF = df.select($\"age_group\", $\"acm_mean\".alias(\"acm_meanF\"))\n                       .filter($\"year\" === año && $\"country\" === pais && $\"sex\" === \"Female\")\n\nval datosFiltradosM = df.select($\"age_group\", $\"acm_mean\".alias(\"acm_meanM\"))\n                       .filter($\"year\" === año && $\"country\" === pais && $\"sex\" === \"Male\")\n                       \nval datosFiltradosUnidos = datosFiltradosF.join(datosFiltradosM, Seq(\"age_group\"), \"inner\")\n\nz.show(datosFiltradosUnidos)",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:38+0200",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "age_group": "string",
+                      "acm_meanF": "string",
+                      "acm_meanM": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "age_group",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "acm_meanF",
+                  "index": 1,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "acm_meanM",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          },
+          "1": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "age_group": "string",
+                      "acm_meanF": "string",
+                      "acm_meanM": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "age_group",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "acm_meanF",
+                  "index": 1,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "acm_meanM",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "age_group\tacm_meanF\tacm_meanM\n0-24\t892.709857101374\t1445.53018294355\n25-34\t606.802780806869\t1376.55260159977\n35-44\t1949.36642928072\t3455.87679283253\n45-54\t5587.18408884611\t10709.5192599407\n55-64\t12339.9893348929\t25240.7963963635\n65-74\t21992.8520226542\t44031.6890995376\n75-84\t54908.154099832\t71162.8710947574\n>85\t145358.756418457\t91228.3495401536\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mpais\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = Spain\n\u001b[1m\u001b[34maño\u001b[0m: \u001b[1m\u001b[32mInt\u001b[0m = 2020\n\u001b[1m\u001b[34mdatosFiltradosF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [age_group: string, acm_meanF: string]\n\u001b[1m\u001b[34mdatosFiltradosM\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [age_group: string, acm_meanM: string]\n\u001b[1m\u001b[34mdatosFiltradosUnidos\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [age_group: string, acm_meanF: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=133",
+              "$$hashKey": "object:1112"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=134",
+              "$$hashKey": "object:1113"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047976_183251500",
+      "id": "paragraph_1714229689430_1596716785",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:38+0200",
+      "dateFinished": "2024-04-29T03:20:39+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:390"
+    },
+    {
+      "text": "//Consultas mas complejas\n\n// Obtener el grupo de edad más afectado para un país y año específico\nval pais = \"Spain\"  \nval año = 2020         \n\nval datosFiltrados = df.filter($\"country\" === pais && $\"year\" === año)\n\n// Calcular el total de exceso de muertes por grupo de edad\nval totalMuertesPorEdad = datosFiltrados.groupBy(\"age_group\")\n  .agg(sum(\"acm_mean\").alias(\"totalMuertes\"))\n  .orderBy($\"totalMuertes\".desc)\n  .first()\n\n// Obtener el grupo de edad más afectado\nval grupoEdadMasAfectado = totalMuertesPorEdad.getString(0)\nval totalMuertes = totalMuertesPorEdad.getDouble(1)\n\nprintln(s\"El grupo de edad más afectado en $pais durante el año pasado fue $grupoEdadMasAfectado, con un total de $totalMuertes fallecidos por el covid.\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:39+0200",
+      "progress": 50,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "country": "string",
+                      "iso3": "string",
+                      "year": "string",
+                      "sex": "string",
+                      "age_group": "string",
+                      "type": "string",
+                      "expected_mean": "string",
+                      "acm_mean": "string",
+                      "excess_mean*": "string",
+                      "expected_mean_squared": "string"
+                    },
+                    "updated": true
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "country",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "expected_mean_squared",
+                  "index": 9,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "El grupo de edad más afectado en Spain durante el año pasado fue >85, con un total de 236587.1059586106 fallecidos por el covid.\n\u001b[1m\u001b[34mpais\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = Spain\n\u001b[1m\u001b[34maño\u001b[0m: \u001b[1m\u001b[32mInt\u001b[0m = 2020\n\u001b[1m\u001b[34mdatosFiltrados\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [country: string, iso3: string ... 7 more fields]\n\u001b[1m\u001b[34mtotalMuertesPorEdad\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Row\u001b[0m = [>85,236587.1059586106]\n\u001b[1m\u001b[34mgrupoEdadMasAfectado\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = >85\n\u001b[1m\u001b[34mtotalMuertes\u001b[0m: \u001b[1m\u001b[32mDouble\u001b[0m = 236587.1059586106\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=135",
+              "$$hashKey": "object:1163"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=136",
+              "$$hashKey": "object:1164"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047976_432345137",
+      "id": "paragraph_1714260515499_276185022",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:39+0200",
+      "dateFinished": "2024-04-29T03:20:40+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:391"
+    },
+    {
+      "text": "import org.apache.spark.sql.expressions.Window\n\n//Obtener el pais con el mayor numero de muertes por rango de años \n\n// Agrupar los datos por país y rango de edad y calcular el total de muertes reportadas en cada grupo\nval totalMuertesPorPaisYEdad = df.groupBy(\"country\", \"age_group\")\n  .agg(sum($\"expected_mean\").alias(\"total_muertes\"))\n  \n// Encontrar el país con el mayor número de muertes en cada rango de edad\nval maxMuertesPorEdad = totalMuertesPorPaisYEdad.groupBy(\"age_group\")\n  .agg(max($\"total_muertes\").alias(\"max_muertes\"))\n  \n// Definir la ventana de partición por grupo de edad y ordenar por el total de muertes\nval windowSpec = Window.partitionBy(\"age_group\").orderBy(desc(\"total_muertes\"))\n\n// Agregar una columna de rango para cada grupo de edad\nval rankedDF = totalMuertesPorPaisYEdad.withColumn(\"rank\", rank().over(windowSpec))\n\n// Filtrar los países con el rango igual a 1 (es decir, el país con el mayor número de muertes en cada grupo de edad)\nval paisesMaxMuertesPorEdad = rankedDF.filter($\"rank\" === 1).select(\"age_group\", \"country\", \"total_muertes\")\n\n// Mostrar los resultados\nz.show(paisesMaxMuertesPorEdad)\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:43+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "age_group": "string",
+                      "country": "string",
+                      "total_muertes": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "age_group",
+                    "index": 0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "country",
+                    "index": 1,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "age_group",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "country",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "total_muertes",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ],
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "age_group\tcountry\ttotal_muertes\n0-24\tIndia\t2265349.349318488\n25-34\tIndia\t704441.0313947969\n35-44\tIndia\t1121267.2948864691\n45-54\tIndia\t1844772.309570798\n55-64\tIndia\t3200127.158354244\n65-74\tChina\t4925146.751538295\n75-84\tChina\t5605336.66005515\n>85\tChina\t4221858.017572936\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.expressions.Window\n\u001b[1m\u001b[34mtotalMuertesPorPaisYEdad\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [country: string, age_group: string ... 1 more field]\n\u001b[1m\u001b[34mmaxMuertesPorEdad\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [age_group: string, max_muertes: double]\n\u001b[1m\u001b[34mwindowSpec\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.expressions.WindowSpec\u001b[0m = org.apache.spark.sql.expressions.WindowSpec@1ffca2eb\n\u001b[1m\u001b[34mrankedDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [country: string, age_group: string ... 2 more fields]\n\u001b[1m\u001b[34mpaisesMaxMuertesPorEdad\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [age_group: string, country: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=137",
+              "$$hashKey": "object:1214"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=138",
+              "$$hashKey": "object:1215"
+            },
+            {
+              "jobUrl": "http://10.0.2.15:4040/jobs/job?id=139",
+              "$$hashKey": "object:1216"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047976_1716030324",
+      "id": "paragraph_1714260819879_1012151918",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "dateStarted": "2024-04-29T03:20:40+0200",
+      "dateFinished": "2024-04-29T03:20:42+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:392"
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2024-04-29T03:20:42+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1714265047976_819341094",
+      "id": "paragraph_1714262750158_173097984",
+      "dateCreated": "2024-04-28T02:44:07+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:393"
+    }
+  ],
+  "name": "Zeppelin_Spark",
+  "id": "2JY4TVF21",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Zeppelin_Spark"
+}
