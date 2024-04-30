@@ -1,0 +1,191 @@
+﻿{
+  "paragraphs": [
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1713865031768_2111389096",
+      "id": "paragraph_1713865031768_2111389096",
+      "dateCreated": "2024-04-23T11:37:11+0200",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:796"
+    },
+    {
+      "text": "// Importamos las clases necesarias de Spark\nimport org.apache.spark.sql.SparkSession\n\n// Creamos una sesión de Spark\nval spark = SparkSession.builder()\n  .appName(\"Ejemplo Spark\")\n  .master(\"local[*]\")\n  .getOrCreate()\n\n\nval data = Seq((\"Alice\", 34), (\"Bob\", 45), (\"Charlie\", 30))\nval df = spark.createDataFrame(data).toDF(\"Name\", \"Age\")\ndf.show()\n\n\nval filteredDF = df.filter($\"Age\" > 30)\nfilteredDF.show()\n\nz.show(df)\n",
+      "user": "anonymous",
+      "dateUpdated": "2024-04-30T14:10:56+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Name": "string",
+                      "Age": "string"
+                    },
+                    "updated": true
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Name",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Age",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+---+\n|   Name|Age|\n+-------+---+\n|  Alice| 34|\n|    Bob| 45|\n|Charlie| 30|\n+-------+---+\n\n+-----+---+\n| Name|Age|\n+-----+---+\n|Alice| 34|\n|  Bob| 45|\n+-----+---+\n\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "Name\tAge\nAlice\t34\nBob\t45\nCharlie\t30\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.SparkSession\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@2df554b\n\u001b[1m\u001b[34mdata\u001b[0m: \u001b[1m\u001b[32mSeq[(String, Int)]\u001b[0m = List((Alice,34), (Bob,45), (Charlie,30))\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Name: string, Age: int]\n\u001b[1m\u001b[34mfilteredDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [Name: string, Age: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1713625549498_166549438",
+      "id": "paragraph_1713625549498_166549438",
+      "dateCreated": "2024-04-20T17:05:49+0200",
+      "dateStarted": "2024-04-30T14:06:20+0200",
+      "dateFinished": "2024-04-30T14:06:35+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:797"
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "2024-04-22T19:58:20+0200",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1713807814776_281727482",
+      "id": "paragraph_1713807814776_281727482",
+      "dateCreated": "2024-04-22T19:43:34+0200",
+      "status": "FINISHED",
+      "$$hashKey": "object:798"
+    }
+  ],
+  "name": "prueba1",
+  "id": "2JU4FGQ7J",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/prueba1"
+}
